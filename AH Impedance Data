@@ -1,0 +1,8 @@
+match (imp:ah_passing_impedance_units)-[ah_passing_impedance_units]->(p:opticross_ah)-[i:ISSUED_TO]->(t:opticross_cyl)-[ii:ISSUED_TO]->(mt:opticross_cyl)-[iii:ISSUED_TO]->(ic:opticross_cyl)<-[:BECOMES]-(pr:process)
+
+where ic.batch_id in ['30867954']
+ and pr.tasklist_doc='92397269'
+
+match (mt_pr:process)-[:BECOMES]->(mt)
+
+return distinct ic.batch_id as ic_batch,mt.batch_id as mount_transducer, t.batch_id as tdx_batch, imp.RATIO_MEAN, imp.RATIO_SD, imp.Valley_Z_MEAN, imp.Valley_Z_SD, imp.Valley_F_MEAN, imp.Valley_F_SD, max(mt_pr.finish_time), min(mt_pr.start_time)
