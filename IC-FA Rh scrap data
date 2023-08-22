@@ -1,0 +1,9 @@
+match (imp:ah_passing_impedance_units)-[ah_passing_impedance_units]->(p:opticross_ah)-[i:ISSUED_TO]->(t:opticross_cyl)-[ii:ISSUED_TO]->(mt:opticross_cyl)-[iii:ISSUED_TO]->(ic:opticross_cyl)-[iiii:ISSUED_TO]->(fn:opticross_cyl)
+
+match (ic:opticross_cyl)<-[:BECOMES]-(pr:process)
+where  pr.tasklist_doc='92397269' and  ic.date_created >= localdatetime ('2023-02-01')  
+optional match (fn)-[:GENERATES]->(s:scrap {scrap_reason_code: 'IF42'})
+
+match (mt_pr:process)-[:BECOMES]->(mt)
+
+return distinct fn.material_id,  fn.batch_id as final_batch, ic.batch_id as imaging_batch, mt.batch_id as mount_transducer, t.batch_id as tdx_batch, imp.RATIO_MEAN,imp.Valley_Z_MEAN, ic.iv93_scrap_count as Rm_Scrap_IC, s.quantity as Rh_scrap, pr.line, ii.quantity, iii.quantity, iiii.quantity
