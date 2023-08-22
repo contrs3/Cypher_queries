@@ -1,0 +1,12 @@
+match (t:opticross_cyl)-[ii:ISSUED_TO]->(mt:opticross_cyl)-[iii:ISSUED_TO]->(ic:opticross_cyl)-[iiii:ISSUED_TO]->(fn:opticross_cyl)<-[]-(impfn:cyl_impedance_test)
+match (impic:cyl_impedance_test)-[]->(ic:opticross_cyl)<-[:BECOMES]-(pes:process {tasklist_doc:'92397269'})
+
+
+where ic.batch_id in ['30769986'] and t.material_desc contains "TRANSDUCER"
+
+ and pes.tasklist_doc='92397269'
+
+match (mt_pr:process)-[:BECOMES]->(mt)
+
+return distinct t.batch_id as tdx_batch,ii.quantity as tdx_issued_to_mt, mt.batch_id as mount_transducer, iii.quantity as mt_issued_to_ic, mt_pr.line as mt_line, ic.batch_id as ic_batch, pes.line as ic_line, ic.iv93_scrap_count as Rm_Scrap_IC,  impic.Rm_filtered_avg as ic_rm_avg, impic.Rm_filtered_std as ic_rm_sd,  fn.batch_id as FG_batch, impfn.Rm_filtered_avg as FG_rm_avg, impfn.Rm_filtered_std as FG_rm_sd
+
