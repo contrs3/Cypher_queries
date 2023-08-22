@@ -1,0 +1,7 @@
+match (imp:ah_passing_impedance_units)-[]->(p:opticross_ah)-[i:ISSUED_TO]->(t:opticross_cyl)-[ii:ISSUED_TO]->(mt:opticross_cyl)-[iii:ISSUED_TO]->(ic:opticross_cyl)<-[:BECOMES]-(pr:process)
+ 
+where  pr.tasklist_doc='92397269' and ii.weight=1 and iii.weight=1
+ 
+match (pes:cyl_pulse_echo_test)-[]->(ic:opticross_cyl)
+ 
+return distinct ic.batch_id as ic_batch,mt.batch_id as mount_transducer, t.batch_id as tdx_batch, imp.RATIO_MEAN, imp.RATIO_SD, ic.low_bandwidth_scrap_count, pes.BW_MHz_avg, pr.line
