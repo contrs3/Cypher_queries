@@ -1,0 +1,6 @@
+match (dc:opticross_cyl)-[iii:ISSUED_TO]->(ic:opticross_cyl)<-[ii:ISSUED_TO]-(c:opticross_cyl)
+match (t:opticross_cyl)-[iiii:ISSUED_TO]->(ic:opticross_cyl)
+
+where ic.batch_id in ['30769872'] and dc.material_desc contains "ASSY DRIVE CABLE STEPPED " and c.material_desc contains "COAX 2X OPPOSITE DIRECTION" and  t.material_desc contains "ASSY TELESCOPE" and ii.weight=1 and iii.weight=1 and iiii.weight=1
+
+return distinct ic.batch_id, ic.material_id, dc.batch_id as Drive, dc.material_id as DrivePN,  c.batch_id as    Coax, c.material_id as CoaxPN, t.batch_id as Telescope, t.material_id as TelescopePN
