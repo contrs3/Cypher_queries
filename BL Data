@@ -1,0 +1,5 @@
+match path = (bl:opticross_ah)-[i:ISSUED_TO*0..5]->(a:opticross_ah)-[ii:ISSUED_TO]->(t:opticross_cyl)-[iii:ISSUED_TO]->(mt:opticross_cyl)-[iiii:ISSUED_TO]->(ic:opticross_cyl)
+
+where mt.material_id in ['50440405-01', '50439993-01'] and t.material_desc contains "TRANSDUCER ASSY" and bl.batch_id = '1228848200' and ic.iv93_scrap_count>15
+
+return distinct ic.batch_id as ic_batch, mt.batch_id as mt_batch, iiii.quantity, ic.low_bandwidth_scrap_count,  ic.iv93_scrap_count order by ic.iv93_scrap_count desc
