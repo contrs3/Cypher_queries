@@ -1,0 +1,7 @@
+match(impc:cyl_impedance_test)-[]->(ic:opticross_cyl)-[iiii:ISSUED_TO]->(fn:opticross_cyl)<-[]-(impfn:cyl_impedance_test)
+
+match (ic:opticross_cyl)<-[:BECOMES]-(pr:process {tasklist_doc:'92397269'})
+
+where ic.batch_id in ['30769872']
+
+return distinct   ic.batch_id as ic_batch, fn.batch_id as final_batch, impc.Rm_filtered_avg, impc.Rh_ohm_avg, impfn.Rm_filtered_avg, impfn.Rh_ohm_avg
