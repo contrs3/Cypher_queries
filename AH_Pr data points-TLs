@@ -1,0 +1,8 @@
+MATCH path =(dp:datapoint_ah)-[:COLLECTED_AT]->(ah_pr:process)-[:BECOMES]->(ws:opticross_ah)-[:ISSUED_TO*]->(a:opticross_ah {material_id:'92401950-01'})-[:ISSUED_TO]->(tdx:opticross_cyl)-[:ISSUED_TO]->(mt:opticross_cyl)-[:ISSUED_TO]->(ic:opticross_cyl)
+
+where ic.batch_id in ['31933028']
+ and dp.datapoint_name in['Vacuum Degas ESN', 'Thermo Oven ESN'] and tdx.material_desc contains 'TRANSDUCER' and mt.material_desc contains 'HSG' //and not exists {(mt)-[:ISSUED_TO]->(:opticross_cyl)}
+
+RETURN distinct tdx.batch_id, tdx.iv93_scrap_score, dp.datapoint_name, dp.data_value
+
+ORDER BY tdx.iv93_scrap_score DESC
