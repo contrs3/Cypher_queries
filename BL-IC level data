@@ -1,0 +1,7 @@
+match path = (bl:opticross_ah)-[i:ISSUED_TO*0..5]->(a:opticross_ah)-[ii:ISSUED_TO]->(t:opticross_cyl)-[iii:ISSUED_TO]->(mt:opticross_cyl)-[iiii:ISSUED_TO]->(ic:opticross_cyl)<-[:BECOMES]-(pes:process {tasklist_doc:'92397269'})
+
+where  ic.date_created >= localdatetime ('2023-06-01')  and t.material_desc contains "TRANSDUCER" and bl.material_desc contains "TUNGSTEN"
+
+return distinct t.batch_id, t.iv93_scrap_score, bl.batch_id
+
+ORDER BY t.iv93_scrap_score DESC
