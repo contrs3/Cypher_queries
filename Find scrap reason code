@@ -1,0 +1,3 @@
+match (a:scrap)
+where a.scrap_reason contains 'PULSO'
+return distinct a.scrap_reason_code, a.scrap_reason
