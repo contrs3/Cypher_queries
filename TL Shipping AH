@@ -1,0 +1,3 @@
+match path = (ap:process {tasklist_doc: '5011908'})-[:BECOMES]->(a:opticross_ah)-[:ISSUED_TO]->(nc:not_consumed_yet)
+where  a.batch_id in ['102729667','102761232','102742915','102761258','102761245','102768278']
+return a.batch_id,ap.finish_time, ap.finish_qty, nc.batch_id
