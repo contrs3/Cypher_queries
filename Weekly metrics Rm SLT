@@ -1,0 +1,15 @@
+//Daily yield report
+match path = (bl:opticross_ah)-[i:ISSUED_TO*0..5]->(a:opticross_ah)-[ii:ISSUED_TO]->(t:opticross_cyl)-[iii:ISSUED_TO]->(mt:opticross_cyl)-[iiii:ISSUED_TO]->(ic:opticross_cyl)<-[:BECOMES]-(pes:process {tasklist_doc:'92397269'})
+ 
+ match  (ic)<-[:BECOMES]-(dhr:process {tasklist_doc:'90948410'})//-[:PROCESS_STEP]->(ic:opticross_cyl)
+ match  (ic)<-[:BECOMES]-(strt:process {tasklist_doc:'92827734'})
+ 
+ MATCH (time_in:datapoint_ah{datapoint_name:'Cure Oven TI'})-[:COLLECTED_AT]->(ah_pr:process{tasklist_name:'92869880'})-[:BECOMES]->(ws:opticross_ah)-[:ISSUED_TO*]->(a)-[:ISSUED_TO]->(t)
+ 
+ MATCH (time_out:datapoint_ah{datapoint_name:'Cure Oven TO'})-[:COLLECTED_AT]->(ah_pr2:process{tasklist_name:'92869881'})-[:BECOMES]->(ws)-[:ISSUED_TO*]->(a)-[:ISSUED_TO]->(t)
+ 
+where  ic.date_created >= localdatetime ('2024-04-01')  and t.material_desc contains "TRANSDUCER" and bl.material_desc contains "TUNGSTEN"
+ 
+ 
+RETURN DISTINCT ic.batch_id, t.batch_id, ah_pr.start_time,a.total_units_issued,t.iv93_scrap_score,ic.material_id, time_in.data_value, time_out.data_value, ic.iv93_scrap_count,pes.start_qty,pes.finish_qty,pes.start_time,pes.finish_time,strt.start_qty, dhr.start_qty
+ORDER BY t.iv93_scrap_score DESC
